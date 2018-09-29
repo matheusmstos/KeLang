@@ -1,8 +1,4 @@
-package Lexical;
-
-/**
- * Created by Matheus on 29/09/18.
- */
+package lexical;
 
 public enum TokenType {
     //FUNCTIONS
@@ -19,14 +15,14 @@ public enum TokenType {
     OR,
     AND,
 
-    //VAR TYPER
+    //VAR TYPE
     INT,
     FLOAT,
     STRING,
 
     //SYMBOLS
     SEMICOLON, //";"
-    EQUAL,
+    ASSIGN, //"="
     OPEN_BRA,
     CLOSE_BRA,
     DOT,
@@ -34,7 +30,7 @@ public enum TokenType {
     CLOSE_QUO, //"
 
     //OPERATORS
-    COMPARE, //"=="
+    EQUAL, //"=="
     GREATER,
     GREATER_EQ,
     LOWER,
