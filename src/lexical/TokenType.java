@@ -1,7 +1,13 @@
 package lexical;
 
 public enum TokenType {
-    //FUNCTIONS
+
+	//special tokens
+    INVALID_TOKEN,
+    UNEXPECTED_EOF,
+    END_OF_FILE,
+
+	//functions
     START,
     EXIT,
     IF,
@@ -15,12 +21,12 @@ public enum TokenType {
     OR,
     AND,
 
-    //VAR TYPE
+    //variable types
     INT,
     FLOAT,
     STRING,
 
-    //SYMBOLS
+    //symbols
     SEMICOLON, //";"
     ASSIGN, //"="
     OPEN_BRA,
@@ -29,7 +35,7 @@ public enum TokenType {
     OPEN_QUO, //"
     CLOSE_QUO, //"
 
-    //OPERATORS
+    //operators
     EQUAL, //"=="
     GREATER,
     GREATER_EQ,
@@ -41,7 +47,8 @@ public enum TokenType {
     STAR, //"*"
     RIGHT_BAR, // "/"
 
-    DIGIT,
+	//others
+    NUMBER,
     LETTER,
     CARACTER,
 }

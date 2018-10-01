@@ -3,7 +3,6 @@ package lexical;
 import java.util.Map;
 import java.util.HashMap;
 
-
 public class SymbolTable
 {
 
@@ -13,7 +12,7 @@ public class SymbolTable
     {
         st = new HashMap<String, TokenType>();
 
-		//FUNCTIONS
+		//functions
 		add("start", TokenType.START);
 		add("exit",  TokenType.EXIT);
 		add("if", 	 TokenType.IF);
@@ -26,12 +25,13 @@ public class SymbolTable
 		add("print", TokenType.PRINT);
 		add("or", 	 TokenType.OR);
 		add("and", 	 TokenType.AND);
-		//VAR TYPER
+
+		//variable types
 		add("int", 	 TokenType.INT);
 		add("float", TokenType.FLOAT);
 		add("string",TokenType.STRING);
 
-		//SYMBOLS
+		//symbols
 		add(";", TokenType.SEMICOLON); //";"
 		add("=", TokenType.ASSIGN); //"="
 		add("(", TokenType.OPEN_BRA);
@@ -40,7 +40,7 @@ public class SymbolTable
 		add("", TokenType.OPEN_QUO); //"
 		add("", TokenType.CLOSE_QUO); //"
 
-		//OPERATORS
+		//operators
 		add("==", TokenType.EQUAL);
 	    add(">",  TokenType.GREATER);
 	    add(">=", TokenType.GREATER_EQ);
@@ -52,18 +52,14 @@ public class SymbolTable
 	    add("*",  TokenType.STAR);
 	    add("/",  TokenType.RIGHT_BAR);
 
-
-		add("", TokenType.DIGIT);
-		add("", TokenType.LETTER);
-		add("", TokenType.CARACTER);
+		//add("", TokenType.DIGIT);
+		//add("", TokenType.LETTER);
+		//add("", TokenType.CARACTER);
 	}
 
-    }
+
 
     //add no HashMap
-	public void add(){
-
-	}
     public void add(String token, TokenType type)
     {
         st.put(token, type);
