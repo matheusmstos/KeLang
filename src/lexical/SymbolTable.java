@@ -37,8 +37,7 @@ public class SymbolTable
 		add("(", TokenType.OPEN_BRA);
 		add(")", TokenType.CLOSE_BRA);
 		add(".", TokenType.DOT);
-		add("", TokenType.OPEN_QUO); //"
-		add("", TokenType.CLOSE_QUO); //"
+		add("\"", TokenType.OPEN_CLOSE_QUO); //"
 
 		//operators
 		add("==", TokenType.EQUAL);
@@ -46,14 +45,14 @@ public class SymbolTable
 	    add(">=", TokenType.GREATER_EQ);
 	    add("<",  TokenType.LOWER);
 	    add("<=", TokenType.LOWER_EQ);
-	    add("<>", TokenType.LOWER_GREATER);
+	    add("<>", TokenType.DIFFERENT);
 	    add("+",  TokenType.PLUS);
 	    add("-",  TokenType.MINUS);
 	    add("*",  TokenType.STAR);
 	    add("/",  TokenType.RIGHT_BAR);
 
-		//add("", TokenType.DIGIT);
-		//add("", TokenType.LETTER);
+		add("", TokenType.LITERAL);
+		add("", TokenType.NUMBER);
 		//add("", TokenType.CARACTER);
 	}
 

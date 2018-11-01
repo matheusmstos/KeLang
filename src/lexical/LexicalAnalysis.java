@@ -35,54 +35,88 @@ public class LexicalAnalysis implements AutoCloseable{
             switch(estado){
                 case(1):
 
-				if(c == -1){
-					lex = new Lexeme("", TokenType.END_OF_FILE);
-					return lex;
-				}
+    				if(c == -1){
+    					lex = new Lexeme("", TokenType.END_OF_FILE);
+    					return lex;
+    				}
 
-				else if (Character.isDigit(c)) {
-					lex.token += (char)c;
-					estado = 2;
-
-				}
-
-				else if (c == ";"  || c == "(" || c == ")" || c == "."
-				|| c == "+" || c == "-" || c == "*" || c == "/") {
-					lex.token += (char)c;
-					estado = 8;
-				}
-
-				else if (c == "=" ||  c == ">") {
-					lex.token += (char)c
-					estado = 3;
-				}
-
-				else if (c == "<") {
-					lex.token += (char)c
-					estado = 4;
-				}
-				break;
-
-				case(2):
-
-				if (Character.isDigit(c)) {
-					lex.token += (char)c;
-					estado = 2;
-				}
-				else{
-					if (c == ".") {
-						lex.token += (char)c;
-						estado = 2;
-					}
-					else{
-						if(c != -1){
-                            input.unread(c);
-						}
+    				else if (Character.isDigit(c)) {
+    					lex.token += (char)c;
                         lex.type = TokenType.NUMBER;
-                        return lex;
-					}
-				}
+    					estado = 2;
+    				}
+
+                    else if (Character.isLetter(c)) {
+                        lex.token += (char)c;
+                        estado = 3;
+                    }
+
+                    else if (c == "\"") {
+                        lex.type = TokenType.LITERAL;
+                        estado = 4;
+
+                    }
+
+    				else if (c == ";"  || c == "(" || c == ")" || c == "."
+    				|| c == "+" || c == "-" || c == "*" || c == "/") {
+    					lex.token += (char)c;
+    					estado = 8;
+    				}
+
+    				else if (c == "=" ||  c == ">") {
+    					lex.token += (char)c
+    					estado = 3;
+    				}
+
+    				else if (c == "<") {
+    					lex.token += (char)c
+    					estado = 4;
+    				}
 				break;
+
+				case 2:
+
+    				if (Character.isDigit(c)) {
+                       lex.token += (char) c;
+                       estado = 2;
+                    }
+                    else {
+                       if (c != -1)
+                           input.unread(c);
+                       estado = 8;
+                    }
+
+				break;
+
+                case 3:
+                    if (Character.isDigit(c) || Character.isLetter(c)) {
+                        lex.token += (char)c;
+                        estado = 3;
+                    }
+                    else{
+                        if (c != -1)
+                            input.unread(c);
+                        estado = 8;
+                    }
+
+                break;
+
+                case 4:
+                    if(c == '"') {
+                        return lex;
+                        }
+                        else {
+                            if (c == -1) {
+                                lex.type = TokenType.UNEXPECTED_EOF;
+                                return lex;
+                            }
+
+                            lex.token += (char) c;
+                            estado = 7;
+                    }
+                break;
+
+
 
 				case(3):
 

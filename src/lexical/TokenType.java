@@ -32,8 +32,7 @@ public enum TokenType {
     OPEN_BRA,
     CLOSE_BRA,
     DOT,
-    OPEN_QUO, //"
-    CLOSE_QUO, //"
+    OPEN_CLOSE_QUO, //"
 
     //operators
     EQUAL, //"=="
@@ -41,7 +40,7 @@ public enum TokenType {
     GREATER_EQ,
     LOWER,
     LOWER_EQ,
-    LOWER_GREATER, //"<>"
+    DIFFERENT, //"<>"
     PLUS,
     MINUS,
     STAR, //"*"
@@ -49,6 +48,5 @@ public enum TokenType {
 
 	//others
     NUMBER,
-    LETTER,
-    CARACTER,
+    LITERAL,
 }
