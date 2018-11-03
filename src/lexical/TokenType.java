@@ -1,4 +1,4 @@
-package lexical;
+package ke_lexical;
 
 public enum TokenType {
 
@@ -47,6 +47,7 @@ public enum TokenType {
     RIGHT_BAR, // "/"
 
 	//others
-    NUMBER,
-    LITERAL,
+    NUMBER, //only digits
+    LITERAL, //starting with "
+	IDENTIFIER, //a variable
 }

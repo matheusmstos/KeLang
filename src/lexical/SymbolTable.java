@@ -1,4 +1,4 @@
-package lexical;
+package ke_lexical;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -53,7 +53,7 @@ public class SymbolTable
 
 		add("", TokenType.LITERAL);
 		add("", TokenType.NUMBER);
-		//add("", TokenType.CARACTER);
+		add("", TokenType.IDENTIFIER);
 	}
 
 

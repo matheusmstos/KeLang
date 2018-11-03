@@ -1,4 +1,4 @@
-package lexical;
+package ke_lexical;
 
 public class Lexeme {
 
