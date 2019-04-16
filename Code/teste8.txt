@@ -1,0 +1,5 @@
+app teste8
+    start
+        %Programa Comentario, vamos ver se dá Comentario
+        %stop
+    stop
