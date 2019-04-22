@@ -31,6 +31,7 @@ public enum TokenType {
     OPEN_KEY,       // {
     CLOSE_KEY,      // }
     ATRIB,          // :=
+    DOT,             // .
 
     // Operadores
     PLUS,           // +
@@ -48,8 +49,8 @@ public enum TokenType {
     NOT,            // !
 
     // Outros
-    VAR,            // Variavel
-    NUMBER,         // Números
+    ID,             // Identificador
+    NUMERO,         // Números reais           
     STRING,         // String
     
 };

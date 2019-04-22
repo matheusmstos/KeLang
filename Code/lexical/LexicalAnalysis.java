@@ -32,79 +32,137 @@ public class LexicalAnalysis implements AutoCloseable {
     }
 
 	public Lexeme nextToken() throws IOException {
-	    int estado = 1;
+	    int estado = 0;
 	    Lexeme lex = new Lexeme("", TokenType.END_OF_FILE);
 
-	    while (estado != 9 && estado != 10) {
+	    while (estado != 8 && estado != 9) {						// Estado 9 é estado de erro padrão.
 	        int c = input.read();
 	        System.out.println("[" + estado + ", \'" + ((char) c) + "\']");
 
-	        switch (estado) {
-	            case 1:
+	        switch (estado) {										// Segue implementação com máquina de estados anexada no arquivo.
+	            case 0:												// Estado inicial
 	                if (c == ' ' || c == '\t' || c == '\r') {
+					   estado = 0;	
 	                } else if (c == '\n') {
+					   estado = 0;
 	                   line++;
-	                } else if (c == '/') {
+	                } else if (c == '%') {
+					   lex.token += (char) c;
+					   estado = 1;
+					} else if (c == '<' || c == '>' || c == '!' || c == ':') {
 	                   lex.token += (char) c;
 	                   estado = 2;
-	                } else if (Character.isDigit(c)) {
+	                } else if (c == '&') {
+					   lex.token += (char) c;
+					   estado = 3;
+					} else if (c == '|') {
+					   lex.token += (char) c;
+					   estado = 4;
+					} else if (Character.isDigit(c)) {
 	                   lex.token += (char) c;
 	                   lex.type = TokenType.NUMBER;
 	                   estado = 5;
-	                } else if (c == '<' || c == '>' || c == '!' || c == '=') {
-	                   lex.token += (char) c;
-	                   estado = 6;
-	                } else if (Character.isLetter(c)) {
-	                   lex.token += (char) c;
-	                   estado = 7;
-	                } else if (c == '\"') {
+	                } else if (c == '_') {
+					   lex.token += (char) c;
+					   lex.type = TokenType.ID;
+					   estado = 6;
+					} else if (c == '{') {
+					   lex.token += (char) c;
 	                   lex.type = TokenType.STRING;
-                    	estado = 8;
+                       estado = 7;
+					} else if (c == ';' || c == ',' || c == '(' || c == ')' || c == '-' || c == '+' || c == '/' || c == '.' ) {
+	                   lex.token += (char) c;
+	                   estado = 8;
+	                } else if (Character.isLetter(c)) {
+	                   lex.token += (char) c;TokenType
+					   lex.type = TokenType.ID;
+	                   estado = 8;
 	                } else if (c == -1) {
 	                   lex.type = TokenType.END_OF_FILE;
-	                   estado = 10;
-	                } else {
-	                   lex.token += (char) c;
-	                   lex.type = TokenType.INVALID_TOKEN;
-	                   estado = 10;
-	                }
-
+	                   estado = 9;
+	                } 
 	           	break;
 
-	            //nao esqueca dos outros
-	            case 5:
+				case 1: 										//Estado de comentário
+					if (c == '\n' && c != '}'){
+						lex.token += (char) c;
+						line++;
+						estado = 0;
+					} else if (c !=  '\n' && c != '}'){
+						lex.token += (char) c;
+						line++;
+						estado = 1;
+					} else {
+						lex.type = TokenType.INVALID_TOKEN;
+						estado = 9;
+					}
+				break;
+
+				case 2:											//Estado de operadores de dois digitos que o segundo dígito é =
+					if (c == '='){
+						lex.token += (char) c;
+						estado = 8;
+					} else {
+						input.unread(c);
+						estado = 8;
+					}
+				break;
+	            
+				case 3:											//Estado de operadores de dois digitos que o segundo digito é &
+					if (c == '&'){
+						lex.token += (char) c;
+						estado = 8;
+					} else {
+						lex.type = TokenType.INVALID_TOKEN;
+						estado = 9;
+					}
+				break;
+
+				case 4:											//Estado de operadores de dois digitos que o segundo digito é |
+					if (c == '|'){
+						lex.token += (char) c;
+						estado = 8;
+					} else {
+						lex.type = TokenType.INVALID_TOKEN;
+						estado = 9;
+					}
+				break;
+
+	            case 5:											//Reconhecimento de padrões numéricos
 	                if (Character.isDigit(c)) {
 	                   lex.token += (char) c;
 	                   estado = 5;
 	                } else {
-	                   if (c != -1)
-	                      input.unread(c);
-	                    estado = 10;
+	                   input.unread(c);
+	                   estado = 8;
 	                }
-
 	            break;
 
-		        case 6:
-	                if (c == '=') {
+		        case 6:											//Reconhecimento de padrões de ID
+	                if (Character.isDigit(c) || Character.isLetter(c) || c == '_') {
 	                    lex.token += (char) c;
+						estado = 6;
 	                } else {
-	                   if (c != -1)
-	                    	input.unread(c);
+	                    input.unread(c);
+						estado = 8;
 	                }
+            	break;
 
-	                estado = 9;
-	            break;
-
-	         	default:
-	            break;
+				case 7: 
+					if (Character.isLetter(c) && c != '}') {
+						lex.token += (char) c;
+						estado = 7;
+					} else if (c == '}') {
+						lex.token += (char) c;
+						estado = 8;
+					} else {
+						lex.type = TokenType.INVALID_TOKEN;
+						estado = 9;
+					}
+				break;
 	        }
 	    }
-
-     	if (estado == 9) {
-	      // consultar a tabela, e definir o tipo.
-	      lex.type = TokenType.NAME;
-	    }
-
+		lex.type = st.find(lex.token);
 	    return lex;
 	}
 }

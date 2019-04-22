@@ -35,7 +35,8 @@ class SymbolTable {
         st.put("{",TokenType.OPEN_KEY);
         st.put("}",TokenType.CLOSE_KEY);
         st.put(":=",TokenType.ATRIB);
-            
+        st.put(".",TokenType.DOT);
+
         // Operadores
   
         st.put("+",TokenType.PLUS);
