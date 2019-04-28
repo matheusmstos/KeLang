@@ -60,7 +60,7 @@ public class LexicalAnalysis implements AutoCloseable {
 					   estado = 4;
 					} else if (Character.isDigit(c)) {
 	                   lex.token += (char) c;
-	                   lex.type = TokenType.NUMBER;
+	                   lex.type = TokenType.NUMERO;
 	                   estado = 5;
 	                } else if (c == '_') {
 					   lex.token += (char) c;
@@ -74,7 +74,7 @@ public class LexicalAnalysis implements AutoCloseable {
 	                   lex.token += (char) c;
 	                   estado = 8;
 	                } else if (Character.isLetter(c)) {
-	                   lex.token += (char) c;TokenType
+	                   lex.token += (char) c;
 					   lex.type = TokenType.ID;
 	                   estado = 8;
 	                } else if (c == -1) {

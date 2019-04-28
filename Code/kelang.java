@@ -18,8 +18,8 @@ public class kelang {
         try (LexicalAnalysis l = new LexicalAnalysis(args[0])) {
             // O código a seguir é dado para testar o interpretador.
             // TODO: descomentar depois que o analisador léxico estiver OK.
-            SyntaticAnalysis s = new SyntaticAnalysis(l);
-            Command c = s.start();
+            //SyntaticAnalysis s = new SyntaticAnalysis(l);
+            //Command c = s.start();
             // c.execute();
 
 /*
@@ -32,10 +32,10 @@ public class kelang {
                 lex = l.nextToken();
             }
 
-            switch (lex.type) {
+            switch (S) {
                 case INVALID_TOKEN:
                     System.out.printf("%02d: Lexema inválido [%s]\n", l.getLine(), lex.token);
-                    break;
+                break;
                 case UNEXPECTED_EOF:
                     System.out.printf("%02d: Fim de arquivo inesperado\n", l.getLine());
                     break;

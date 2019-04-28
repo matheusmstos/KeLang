@@ -50,7 +50,8 @@ public enum TokenType {
 
     // Outros
     ID,             // Identificador
-    NUMERO,         // Números reais           
+    NUM_INT,        // Número inteiro
+    NUM_REAL,       // Número real           
     STRING,         // String
     
 };
