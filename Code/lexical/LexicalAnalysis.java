@@ -42,7 +42,7 @@ public class LexicalAnalysis implements AutoCloseable {
 			if(Character.isUpperCase(c)){
 				c = c + 32;											// Esse trecho converte o caractere maiúsculo em mínusculo baseado na tabela ASCII.
 			}
-	        System.out.println("[" + estado + ", \'" + ((char) c) + "\']");
+//	        System.out.println("[" + estado + ", \'" + ((char) c) + "\']");	//Esta linha é apenas para caso de teste 
 
 	        switch (estado) {										// Segue implementação com máquina de estados anexada no arquivo.
 	            case 0:												// Estado inicial
@@ -97,7 +97,6 @@ public class LexicalAnalysis implements AutoCloseable {
 							lex.type = TokenType.VG;
 							estado = 11;
 					   } else {
-						   System.out.println("Debug1");
 							lex.type = TokenType.INVALID_TOKEN;
 							estado = 12;
 					   }
@@ -128,7 +127,6 @@ public class LexicalAnalysis implements AutoCloseable {
 						lex.token += (char) c;
 						estado = 1;
 					} else {
-						System.out.println("Debug2");
 						lex.type = TokenType.INVALID_TOKEN;
 						estado = 12;
 					}
@@ -159,8 +157,6 @@ public class LexicalAnalysis implements AutoCloseable {
 							estado = 11;
 						}
 						else{
-							input.unread(c);
-							System.out.println("Debug3");
 							lex.type = TokenType.INVALID_TOKEN;
 							estado = 12;
 						}
@@ -215,7 +211,6 @@ public class LexicalAnalysis implements AutoCloseable {
 								estado = 11;
 							break;
 							case ":":
-							System.out.println("Debug4");
 								lex.type = TokenType.INVALID_TOKEN;
 								estado = 12;
 							break;
@@ -230,7 +225,6 @@ public class LexicalAnalysis implements AutoCloseable {
 						estado = 11;
 	                } else {
 						input.unread(c);
-						System.out.println("Debug5");
 						lex.type = TokenType.INVALID_TOKEN;
 						estado = 12;
 	                }
@@ -243,7 +237,6 @@ public class LexicalAnalysis implements AutoCloseable {
 						estado = 11;
 					} else {
 						input.unread(c);
-						System.out.println("Debug6");
 						lex.type = TokenType.INVALID_TOKEN;
 						estado = 12;
 					}
@@ -268,7 +261,6 @@ public class LexicalAnalysis implements AutoCloseable {
 						lex.token += (char) c;
 						estado = 10;
 					} else {
-						System.out.println("Debug7");
 						lex.type = TokenType.INVALID_TOKEN;
 						estado = 12;
 					}
@@ -286,7 +278,6 @@ public class LexicalAnalysis implements AutoCloseable {
 				break;
 	        }
 	    }
-		lex.type = st.find(lex.token);
 	    return lex;
 	}
 }
