@@ -1,11 +1,11 @@
-app teste1
+app t
    int a, b, c;
-   int result
+   int _result
    start
      read (a);
      read (c);
      b := 10.23 + a + c;
-     result := (a + b) -;
-     write(result);
-     teste1 := 1
+     _result := (a + b) -;
+     write(_result);
+     t := 1
    stop

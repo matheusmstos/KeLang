@@ -22,7 +22,7 @@ public class kelang {
             //Command c = s.start();
             // c.execute();
 
-/*
+
 
             // O código a seguir é usado apenas para testar o analisador léxico.
             // TODO: depois de pronto, comentar o código abaixo.
@@ -32,7 +32,7 @@ public class kelang {
                 lex = l.nextToken();
             }
 
-            switch (S) {
+            switch (lex.type) {
                 case INVALID_TOKEN:
                     System.out.printf("%02d: Lexema inválido [%s]\n", l.getLine(), lex.token);
                 break;
@@ -43,7 +43,7 @@ public class kelang {
                     System.out.printf("(\"%s\", %s)\n", lex.token, lex.type);
                     break;
             }
-*/
+
         } catch (Exception e) {
             System.err.println("Internal error: " + e.getMessage());
         }

@@ -37,8 +37,11 @@ public class LexicalAnalysis implements AutoCloseable {
 	    int estado = 0;
 	    Lexeme lex = new Lexeme("", TokenType.END_OF_FILE);
 
-	    while (estado != 11 && estado != 12) {						// Estado 9 é estado de erro padrão.
+	    while (estado != 11 && estado != 12) {						// Estado 12 é estado de erro padrão.
 	        int c = input.read();
+			if(Character.isUpperCase(c)){
+				c = c + 32;											// Esse trecho converte o caractere maiúsculo em mínusculo baseado na tabela ASCII.
+			}
 	        System.out.println("[" + estado + ", \'" + ((char) c) + "\']");
 
 	        switch (estado) {										// Segue implementação com máquina de estados anexada no arquivo.
@@ -94,10 +97,11 @@ public class LexicalAnalysis implements AutoCloseable {
 							lex.type = TokenType.VG;
 							estado = 11;
 					   } else {
+						   System.out.println("Debug1");
 							lex.type = TokenType.INVALID_TOKEN;
 							estado = 12;
 					   }
-	                } else if (c == '<' || c == '>' || c == '!') {
+	                } else if (c == '<' || c == '>' || c == '!' || c == ':') {
 					   lex.token += (char) c;
 					   estado = 5;
 					} else if (c == '|') {
@@ -111,7 +115,7 @@ public class LexicalAnalysis implements AutoCloseable {
 	                   estado = 8;
 	                } else if (c == -1) {
 	                   lex.type = TokenType.END_OF_FILE;
-	                   estado = 9;
+	                   estado = 11;
 	                } 
 	           	break;
 
@@ -124,8 +128,9 @@ public class LexicalAnalysis implements AutoCloseable {
 						lex.token += (char) c;
 						estado = 1;
 					} else {
+						System.out.println("Debug2");
 						lex.type = TokenType.INVALID_TOKEN;
-						estado = 9;
+						estado = 12;
 					}
 				break;
 
@@ -142,46 +147,23 @@ public class LexicalAnalysis implements AutoCloseable {
 	            
 				case 3:											//Estado de identificadores que começam com letra e palavras reservadas
 					if (Character.isLetter(c)){
-						//Pensando
-						switch(lex.token){
-							case 'a':
-							case 'ap':
-							case 'app':
-							case 'd':
-							case 'do':
-							case 'e':
-							case 'el':
-							case 'en':
-							case 'els':
-							case 'end':
-							case 'else':
-							case 'i':
-							case 'if':
-							case 'in':
-							case 'int':
-							case 'inte':
-							case 'integ':
-							case 'intege':
-							case 'integer:'
-							case 'r':
-							case 're':
-							case 'rea':
-							case 'rep':
-							case 'read':
-							case 'real':
-							case 'repe':
-							case 'repea':
-							case 'repeat':
-							case 's':
-							case 'st':
-							case 'sta':
-							case 'sto':
-							case 'star':
-							case 'stop':
-						}
+						lex.token += (char) c;
+						estado = 3;
 					} else {
-						lex.type = TokenType.ID;
-						estado = 11;
+						if (lex.token.length() == 1){
+							lex.type = TokenType.ID;
+							estado = 11;
+						}
+						else if(st.contains(lex.token)){
+							lex.type = st.find(lex.token);
+							estado = 11;
+						}
+						else{
+							input.unread(c);
+							System.out.println("Debug3");
+							lex.type = TokenType.INVALID_TOKEN;
+							estado = 12;
+						}
 					}
 				break;
 
@@ -198,18 +180,21 @@ public class LexicalAnalysis implements AutoCloseable {
 
 	            case 5:											//Reconhecimento de operadores
 	                if (c == '=') {
-						lex.token += (char) c;
 	                    switch(lex.token){
-						    case '<': 
+						    case "<": 
+								lex.token += (char) c;
 								lex.type = TokenType.LOWER_EQUAL;
 							break;
-						    case '>': 
+						    case ">": 
+								lex.token += (char) c;
 						   		lex.type = TokenType.GREATER_EQUAL;
 							break;
-							case '!': 
+							case "!": 
+								lex.token += (char) c;
 								lex.type = TokenType.NOT_EQUAL;
 						    break;
-						    case ':': 
+						    case ":":
+								lex.token += (char) c; 
 								lex.type = TokenType.ATRIB;
 							break;
 						}
@@ -217,19 +202,20 @@ public class LexicalAnalysis implements AutoCloseable {
 	                } else {
 						input.unread(c);
 	                    switch(lex.token){
-							case '<': 
+							case "<": 
 								lex.type = TokenType.LOWER_THAN;
 								estado = 11;
 							break;
-							case '>': 
+							case ">": 
 								lex.type = TokenType.GREATER_THAN;
 								estado = 11;
 							break;
-							case '!':
+							case "!":
 								lex.type = TokenType.NOT;
 								estado = 11;
 							break;
-							case ':':
+							case ":":
+							System.out.println("Debug4");
 								lex.type = TokenType.INVALID_TOKEN;
 								estado = 12;
 							break;
@@ -237,7 +223,6 @@ public class LexicalAnalysis implements AutoCloseable {
 	                   
 	                }
 	            break;
-
 		        case 6:											//Reconhecimento de operadores |
 	                if (c == '|') {
 						lex.token += (char) c;
@@ -245,6 +230,7 @@ public class LexicalAnalysis implements AutoCloseable {
 						estado = 11;
 	                } else {
 						input.unread(c);
+						System.out.println("Debug5");
 						lex.type = TokenType.INVALID_TOKEN;
 						estado = 12;
 	                }
@@ -257,6 +243,7 @@ public class LexicalAnalysis implements AutoCloseable {
 						estado = 11;
 					} else {
 						input.unread(c);
+						System.out.println("Debug6");
 						lex.type = TokenType.INVALID_TOKEN;
 						estado = 12;
 					}
@@ -281,6 +268,7 @@ public class LexicalAnalysis implements AutoCloseable {
 						lex.token += (char) c;
 						estado = 10;
 					} else {
+						System.out.println("Debug7");
 						lex.type = TokenType.INVALID_TOKEN;
 						estado = 12;
 					}
