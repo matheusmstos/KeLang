@@ -129,66 +129,171 @@ public class LexicalAnalysis implements AutoCloseable {
 					}
 				break;
 
-				case 2:											//Estado de operadores de dois digitos que o segundo dígito é =
-					if (c == '='){
+				case 2:											//Estado de String
+					if (c != '}'){
 						lex.token += (char) c;
-						estado = 8;
+						estado = 2;
 					} else {
-						input.unread(c);
-						estado = 8;
+						lex.token += (char) c;
+						lex.type = TokenType.STRING;
+						estado = 11;
 					}
 				break;
 	            
-				case 3:											//Estado de operadores de dois digitos que o segundo digito é &
-					if (c == '&'){
-						lex.token += (char) c;
-						estado = 8;
+				case 3:											//Estado de identificadores que começam com letra e palavras reservadas
+					if (Character.isLetter(c)){
+						//Pensando
+						switch(lex.token){
+							case 'a':
+							case 'ap':
+							case 'app':
+							case 'd':
+							case 'do':
+							case 'e':
+							case 'el':
+							case 'en':
+							case 'els':
+							case 'end':
+							case 'else':
+							case 'i':
+							case 'if':
+							case 'in':
+							case 'int':
+							case 'inte':
+							case 'integ':
+							case 'intege':
+							case 'integer:'
+							case 'r':
+							case 're':
+							case 'rea':
+							case 'rep':
+							case 'read':
+							case 'real':
+							case 'repe':
+							case 'repea':
+							case 'repeat':
+							case 's':
+							case 'st':
+							case 'sta':
+							case 'sto':
+							case 'star':
+							case 'stop':
+						}
 					} else {
-						lex.type = TokenType.INVALID_TOKEN;
-						estado = 9;
+						lex.type = TokenType.ID;
+						estado = 11;
 					}
 				break;
 
-				case 4:											//Estado de operadores de dois digitos que o segundo digito é |
-					if (c == '|'){
+				case 4:											//Estado de identificadores que começam com _
+					if (c == '_' || Character.isDigit(c) || Character.isLetter(c)){
 						lex.token += (char) c;
-						estado = 8;
+						estado = 4;
 					} else {
-						lex.type = TokenType.INVALID_TOKEN;
-						estado = 9;
+						lex.type = TokenType.ID;
+						input.unread(c);
+						estado = 11;
 					}
 				break;
 
-	            case 5:											//Reconhecimento de padrões numéricos
-	                if (Character.isDigit(c)) {
-	                   lex.token += (char) c;
-	                   estado = 5;
+	            case 5:											//Reconhecimento de operadores
+	                if (c == '=') {
+						lex.token += (char) c;
+	                    switch(lex.token){
+						    case '<': 
+								lex.type = TokenType.LOWER_EQUAL;
+							break;
+						    case '>': 
+						   		lex.type = TokenType.GREATER_EQUAL;
+							break;
+							case '!': 
+								lex.type = TokenType.NOT_EQUAL;
+						    break;
+						    case ':': 
+								lex.type = TokenType.ATRIB;
+							break;
+						}
+						estado = 11;
 	                } else {
-	                   input.unread(c);
-	                   estado = 8;
+						input.unread(c);
+	                    switch(lex.token){
+							case '<': 
+								lex.type = TokenType.LOWER_THAN;
+								estado = 11;
+							break;
+							case '>': 
+								lex.type = TokenType.GREATER_THAN;
+								estado = 11;
+							break;
+							case '!':
+								lex.type = TokenType.NOT;
+								estado = 11;
+							break;
+							case ':':
+								lex.type = TokenType.INVALID_TOKEN;
+								estado = 12;
+							break;
+					    }
+	                   
 	                }
 	            break;
 
-		        case 6:											//Reconhecimento de padrões de ID
-	                if (Character.isDigit(c) || Character.isLetter(c) || c == '_') {
-	                    lex.token += (char) c;
-						estado = 6;
+		        case 6:											//Reconhecimento de operadores |
+	                if (c == '|') {
+						lex.token += (char) c;
+						lex.type = TokenType.OR;
+						estado = 11;
 	                } else {
-	                    input.unread(c);
-						estado = 8;
+						input.unread(c);
+						lex.type = TokenType.INVALID_TOKEN;
+						estado = 12;
 	                }
             	break;
 
-				case 7: 
-					if (Character.isLetter(c) && c != '}') {
+				case 7:											//Reconhecimento de operadores & 
+					if (c == '&') {
 						lex.token += (char) c;
-						estado = 7;
-					} else if (c == '}') {
+						lex.type = TokenType.AND;
+						estado = 11;
+					} else {
+						input.unread(c);
+						lex.type = TokenType.INVALID_TOKEN;
+						estado = 12;
+					}
+				break;
+
+				case 8:											//Reconhecimento de constantes numéricas
+					if	(Character.isDigit(c)){
 						lex.token += (char) c;
 						estado = 8;
+					} else if (c == '.'){
+						lex.token += (char) c;
+						estado = 9;
+					} else {
+						input.unread(c);
+						lex.type = TokenType.NUM_INT;
+						estado = 11;
+					}
+				break;
+
+				case 9:											//Reconhecimento de número real
+					if (Character.isDigit(c)){
+						lex.token += (char) c;
+						estado = 10;
 					} else {
 						lex.type = TokenType.INVALID_TOKEN;
-						estado = 9;
+						estado = 12;
+					}
+				break;
+
+				case 10:										//Reconhecimento de número real
+					if (Character.isDigit(c)){
+						lex.token += (char) c;
+						estado = 10;
+					} else {
+						input.unread(c);
+						lex.type = TokenType.NUM_REAL;
+						estado = 11;
 					}
 				break;
 	        }

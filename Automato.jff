@@ -60,97 +60,12 @@
 		<transition>
 			<from>8</from>
 			<to>2</to>
-			<read>else, unread(c)</read>
-		</transition>
-		<transition>
-			<from>0</from>
-			<to>7</to>
-			<read>&amp;</read>
-		</transition>
-		<transition>
-			<from>6</from>
-			<to>2</to>
-			<read>|</read>
-		</transition>
-		<transition>
-			<from>0</from>
-			<to>4</to>
-			<read>digit</read>
-		</transition>
-		<transition>
-			<from>0</from>
-			<to>2</to>
-			<read>,</read>
-		</transition>
-		<transition>
-			<from>9</from>
-			<to>11</to>
-			<read>else palavra_nao_reservada</read>
+			<read>=</read>
 		</transition>
 		<transition>
 			<from>0</from>
 			<to>8</to>
-			<read>!</read>
-		</transition>
-		<transition>
-			<from>5</from>
-			<to>11</to>
-			<read>else </read>
-		</transition>
-		<transition>
-			<from>0</from>
-			<to>2</to>
-			<read>/</read>
-		</transition>
-		<transition>
-			<from>6</from>
-			<to>11</to>
-			<read>else</read>
-		</transition>
-		<transition>
-			<from>0</from>
-			<to>2</to>
-			<read>(</read>
-		</transition>
-		<transition>
-			<from>0</from>
-			<to>2</to>
-			<read>)</read>
-		</transition>
-		<transition>
-			<from>5</from>
-			<to>12</to>
-			<read>digit</read>
-		</transition>
-		<transition>
-			<from>0</from>
-			<to>2</to>
-			<read>+</read>
-		</transition>
-		<transition>
-			<from>10</from>
-			<to>2</to>
-			<read>unread(c)</read>
-		</transition>
-		<transition>
-			<from>0</from>
-			<to>0</to>
-			<read>\n</read>
-		</transition>
-		<transition>
-			<from>1</from>
-			<to>0</to>
-			<read>\n</read>
-		</transition>
-		<transition>
-			<from>0</from>
-			<to>8</to>
-			<read>&gt;</read>
-		</transition>
-		<transition>
-			<from>0</from>
-			<to>0</to>
-			<read>\r</read>
+			<read>:</read>
 		</transition>
 		<transition>
 			<from>0</from>
@@ -159,11 +74,11 @@
 		</transition>
 		<transition>
 			<from>0</from>
-			<to>0</to>
-			<read>\t</read>
+			<to>8</to>
+			<read>&gt;</read>
 		</transition>
 		<transition>
-			<from>9</from>
+			<from>12</from>
 			<to>2</to>
 			<read>unread(c)</read>
 		</transition>
@@ -173,14 +88,34 @@
 			<read>letter</read>
 		</transition>
 		<transition>
-			<from>3</from>
-			<to>2</to>
-			<read>}</read>
+			<from>1</from>
+			<to>0</to>
+			<read>\n</read>
+		</transition>
+		<transition>
+			<from>5</from>
+			<to>11</to>
+			<read>else </read>
 		</transition>
 		<transition>
 			<from>0</from>
-			<to>2</to>
-			<read>;</read>
+			<to>0</to>
+			<read>\n</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>0</to>
+			<read>\r</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>0</to>
+			<read>\t</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>8</to>
+			<read>!</read>
 		</transition>
 		<transition>
 			<from>4</from>
@@ -203,9 +138,9 @@
 			<read>digit</read>
 		</transition>
 		<transition>
-			<from>0</from>
-			<to>6</to>
-			<read>|</read>
+			<from>9</from>
+			<to>11</to>
+			<read>else palavra_nao_reservada</read>
 		</transition>
 		<transition>
 			<from>7</from>
@@ -213,27 +148,57 @@
 			<read>else </read>
 		</transition>
 		<transition>
-			<from>0</from>
-			<to>1</to>
-			<read>%</read>
-		</transition>
-		<transition>
 			<from>3</from>
 			<to>3</to>
 			<read>caractere</read>
 		</transition>
 		<transition>
-			<from>7</from>
-			<to>2</to>
-			<read>&amp;</read>
+			<from>6</from>
+			<to>11</to>
+			<read>else</read>
 		</transition>
 		<transition>
-			<from>12</from>
+			<from>0</from>
+			<to>1</to>
+			<read>%</read>
+		</transition>
+		<transition>
+			<from>0</from>
 			<to>2</to>
-			<read>unread(c)</read>
+			<read>/</read>
 		</transition>
 		<transition>
 			<from>4</from>
+			<to>5</to>
+			<read>.</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>2</to>
+			<read>-</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>2</to>
+			<read>,</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>2</to>
+			<read>+</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>2</to>
+			<read>*</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>2</to>
+			<read>)</read>
+		</transition>
+		<transition>
+			<from>9</from>
 			<to>2</to>
 			<read>unread(c)</read>
 		</transition>
@@ -243,9 +208,49 @@
 			<read>' '</read>
 		</transition>
 		<transition>
+			<from>0</from>
+			<to>2</to>
+			<read>(</read>
+		</transition>
+		<transition>
+			<from>5</from>
+			<to>12</to>
+			<read>digit</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>6</to>
+			<read>|</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>4</to>
+			<read>digit</read>
+		</transition>
+		<transition>
 			<from>8</from>
 			<to>2</to>
-			<read>=</read>
+			<read>else, unread(c)</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>3</to>
+			<read>{</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>10</to>
+			<read>_</read>
+		</transition>
+		<transition>
+			<from>3</from>
+			<to>2</to>
+			<read>}</read>
+		</transition>
+		<transition>
+			<from>6</from>
+			<to>2</to>
+			<read>|</read>
 		</transition>
 		<transition>
 			<from>9</from>
@@ -258,19 +263,29 @@
 			<read>letter</read>
 		</transition>
 		<transition>
-			<from>0</from>
-			<to>10</to>
-			<read>_</read>
+			<from>10</from>
+			<to>2</to>
+			<read>unread(c)</read>
 		</transition>
 		<transition>
-			<from>0</from>
-			<to>3</to>
-			<read>{</read>
+			<from>7</from>
+			<to>2</to>
+			<read>&amp;</read>
 		</transition>
 		<transition>
 			<from>4</from>
-			<to>5</to>
-			<read>.</read>
+			<to>2</to>
+			<read>unread(c)</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>2</to>
+			<read>;</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>7</to>
+			<read>&amp;</read>
 		</transition>
 	</automaton>
 </structure>

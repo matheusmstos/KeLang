@@ -10,4 +10,7 @@ public class Lexeme {
         this.type = type;
     }
 
+    public String getToken(Lexeme lex){
+        return lex.token;
+    }
 }
