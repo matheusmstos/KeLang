@@ -55,7 +55,6 @@ public class LexicalAnalysis implements AutoCloseable {
 					   estado = 1;
 					} else if (c == '{') {
 	                   lex.token += (char) c;
-					   lex.type = TokenType.OPEN_KEY;
 	                   estado = 2;
 	                } else if (Character.isLetter(c)) {
 					   lex.token += (char) c;
@@ -135,15 +134,19 @@ public class LexicalAnalysis implements AutoCloseable {
 				break;
 
 				case 2:											//Estado de String
-					if (c != '}'){
-						lex.token += (char) c;
-						lex.type = TokenType.STRING;
-						estado = 2;
-					} else {
-						lex.token += (char) c;
-						lex.type = TokenType.CLOSE_KEY;
-						estado = 11;
-					}
+				    if(c != '\n'){
+						if (c != '}'){
+							lex.token += (char) c;
+							lex.type = TokenType.STRING;
+							estado = 2;
+						} else {
+							lex.token += (char) c;
+							estado = 11;
+						}
+					} else{
+						lex.type = TokenType.INVALID_TOKEN;
+						estado = 12;
+					} 
 				break;
 	            
 				case 3:											//Estado de identificadores que começam com letra e palavras reservadas
@@ -151,7 +154,6 @@ public class LexicalAnalysis implements AutoCloseable {
 						lex.token += (char) c;
 						estado = 3;
 					} else {
-						input.unread(c);
 						if (lex.token.length() == 1){
 							lex.type = TokenType.ID;
 							estado = 11;
@@ -173,7 +175,6 @@ public class LexicalAnalysis implements AutoCloseable {
 						estado = 4;
 					} else {
 						lex.type = TokenType.ID;
-						input.unread(c);
 						estado = 11;
 					}
 				break;
@@ -254,7 +255,6 @@ public class LexicalAnalysis implements AutoCloseable {
 						lex.token += (char) c;
 						estado = 9;
 					} else {
-						input.unread(c);
 						lex.type = TokenType.NUM_INT;
 						estado = 11;
 					}
@@ -275,11 +275,13 @@ public class LexicalAnalysis implements AutoCloseable {
 						lex.token += (char) c;
 						estado = 10;
 					} else {
-						input.unread(c);
 						lex.type = TokenType.NUM_REAL;
 						estado = 11;
 					}
 				break;
+				
+				default: break;
+				
 	        }
 	    }
 	    return lex;

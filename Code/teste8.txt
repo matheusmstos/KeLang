@@ -1,5 +1,9 @@
-app teste8
+app _teste8
     start
         %Programa Comentario, vamos ver se dá Comentario
         %stop
     stop
+    _xd
+    6.1
+    7
+    {arroz}
