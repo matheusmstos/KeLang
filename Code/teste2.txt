@@ -1,6 +1,6 @@
 app
-  int a;
-  int b;
+  integer a;
+  integer b;
   real f, _f
 start
   read (a);

@@ -1,14 +1,14 @@
-app Teste5
-  int j, k;
+app _Teste5
+  integer j, k;
   real a, j
 start
   read(j);
   read(k);
   if (k != 0)
-    result := j/k
+    a := j/k
   else
-    result := 0
+    a := 0
   end;
 
-write(res)
+write(a)
 stop

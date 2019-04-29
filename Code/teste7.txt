@@ -1,14 +1,14 @@
 %Calculo aproximado da area de um circulo
 app testeVII
     int r;
-    real a;
+    real A;
     real pi := 3,1415;
     start
         read(r);
 
-        a := 0;
-        a := r * r * pi;
+        A := 0;
+        A := r * r * pi;
         
         write({A area do circulo e: });
-        write(a);
+        write(A);
     stop

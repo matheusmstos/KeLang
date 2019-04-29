@@ -1,16 +1,16 @@
-App pessoa
-  int: cont;
-  real altura, soma;
+App _pessoa
+  integer _cont;
+  real _altura, _soma;
 start
-  cont := 5;
-  soma := 0;
+  _cont := 5;
+  _soma := 0;
   repeat
 	write({Altura: });
-	read (altura);
-	soma := soma # altura;
-	cont := cont - 1
-  until(cont=0);
-  media := soma / 5;
+	read (_altura);
+	_soma := _soma + _altura;
+	_cont := _cont - 1
+  until(_cont=0);
+  _media := _soma / 5;
   write({Media: });
-  write (media)
+  write (_media)
 stop

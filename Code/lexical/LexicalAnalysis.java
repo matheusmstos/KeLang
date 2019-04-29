@@ -52,10 +52,10 @@ public class LexicalAnalysis implements AutoCloseable {
 					   estado = 0;
 	                   line++;
 	                } else if (c == '%') {
-					   lex.token += (char) c;
 					   estado = 1;
 					} else if (c == '{') {
 	                   lex.token += (char) c;
+					   lex.type = TokenType.OPEN_KEY;
 	                   estado = 2;
 	                } else if (Character.isLetter(c)) {
 					   lex.token += (char) c;
@@ -63,7 +63,7 @@ public class LexicalAnalysis implements AutoCloseable {
 					} else if (c == '_') {
 					   lex.token += (char) c;
 					   estado = 4;
-					} else if (c == ';' || c == '+' || c == '-' || c == '(' || c == ')' || c == '*' || c == '/' || c == ',') {
+					} else if (c == ';' || c == '+' || c == '-' || c == '(' || c == ')' || c == '*' || c == '/' || c == ',' || c == '=') {
 	                   if(c == ';'){
 							lex.token += (char) c;
 							lex.type = TokenType.PVG;
@@ -96,6 +96,9 @@ public class LexicalAnalysis implements AutoCloseable {
 							lex.token += (char) c;
 							lex.type = TokenType.VG;
 							estado = 11;
+					   } else if(c == '=') {
+						    lex.token += (char) c;
+							lex.type = TokenType.EQUAL;
 					   } else {
 							lex.type = TokenType.INVALID_TOKEN;
 							estado = 12;
@@ -115,30 +118,30 @@ public class LexicalAnalysis implements AutoCloseable {
 	                } else if (c == -1) {
 	                   lex.type = TokenType.END_OF_FILE;
 	                   estado = 11;
-	                } 
+	                } else {
+					   lex.token += (char) c;
+					   lex.type = TokenType.INVALID_TOKEN;
+					   estado = 12;
+					}
 	           	break;
 
 				case 1: 										//Estado de comentário
-					if (c == '\n' && c != '}'){
-						lex.token += (char) c;
+					if (c == '\n'){
 						line++;
 						estado = 0;
-					} else if (c !=  '\n' && c != '}'){
-						lex.token += (char) c;
-						estado = 1;
 					} else {
-						lex.type = TokenType.INVALID_TOKEN;
-						estado = 12;
+						estado = 1;
 					}
 				break;
 
 				case 2:											//Estado de String
 					if (c != '}'){
 						lex.token += (char) c;
+						lex.type = TokenType.STRING;
 						estado = 2;
 					} else {
 						lex.token += (char) c;
-						lex.type = TokenType.STRING;
+						lex.type = TokenType.CLOSE_KEY;
 						estado = 11;
 					}
 				break;
@@ -148,6 +151,7 @@ public class LexicalAnalysis implements AutoCloseable {
 						lex.token += (char) c;
 						estado = 3;
 					} else {
+						input.unread(c);
 						if (lex.token.length() == 1){
 							lex.type = TokenType.ID;
 							estado = 11;
