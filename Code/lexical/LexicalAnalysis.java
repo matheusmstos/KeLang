@@ -6,6 +6,8 @@ import java.io.PushbackInputStream;
 
 import java.util.*;
 
+import javax.lang.model.util.ElementScanner6;
+
 public class LexicalAnalysis implements AutoCloseable {
 
     private int line;
@@ -35,7 +37,7 @@ public class LexicalAnalysis implements AutoCloseable {
 	    int estado = 0;
 	    Lexeme lex = new Lexeme("", TokenType.END_OF_FILE);
 
-	    while (estado != 8 && estado != 9) {						// Estado 9 é estado de erro padrão.
+	    while (estado != 11 && estado != 12) {						// Estado 9 é estado de erro padrão.
 	        int c = input.read();
 	        System.out.println("[" + estado + ", \'" + ((char) c) + "\']");
 
@@ -49,33 +51,63 @@ public class LexicalAnalysis implements AutoCloseable {
 	                } else if (c == '%') {
 					   lex.token += (char) c;
 					   estado = 1;
-					} else if (c == '<' || c == '>' || c == '!' || c == ':') {
+					} else if (c == '{') {
 	                   lex.token += (char) c;
 	                   estado = 2;
-	                } else if (c == '&') {
+	                } else if (Character.isLetter(c)) {
 					   lex.token += (char) c;
 					   estado = 3;
-					} else if (c == '|') {
+					} else if (c == '_') {
 					   lex.token += (char) c;
 					   estado = 4;
-					} else if (Character.isDigit(c)) {
-	                   lex.token += (char) c;
-	                   lex.type = TokenType.NUMERO;
-	                   estado = 5;
-	                } else if (c == '_') {
+					} else if (c == ';' || c == '+' || c == '-' || c == '(' || c == ')' || c == '*' || c == '/' || c == ',') {
+	                   if(c == ';'){
+							lex.token += (char) c;
+							lex.type = TokenType.PVG;
+							estado = 11;
+					   } else if(c == '+'){
+							lex.token += (char) c;
+							lex.type = TokenType.PLUS;
+							estado = 11;
+					   } else if(c == '-'){
+							lex.token += (char) c;
+							lex.type = TokenType.MINUS;
+							estado = 11;
+					   } else if(c == '('){
+							lex.token += (char) c;
+							lex.type = TokenType.OPEN_PAR;
+							estado = 11;
+					   } else if(c == ')'){
+							lex.token += (char) c;
+							lex.type = TokenType.CLOSE_PAR;
+							estado = 11;
+					   } else if(c == '*'){
+							lex.token += (char) c;
+							lex.type = TokenType.MUL;
+							estado = 11;
+					   } else if(c == '/'){
+							lex.token += (char) c;
+							lex.type = TokenType.DIV;
+							estado = 11;
+					   } else if(c == ','){
+							lex.token += (char) c;
+							lex.type = TokenType.VG;
+							estado = 11;
+					   } else {
+							lex.type = TokenType.INVALID_TOKEN;
+							estado = 12;
+					   }
+	                } else if (c == '<' || c == '>' || c == '!') {
 					   lex.token += (char) c;
-					   lex.type = TokenType.ID;
-					   estado = 6;
-					} else if (c == '{') {
+					   estado = 5;
+					} else if (c == '|') {
 					   lex.token += (char) c;
-	                   lex.type = TokenType.STRING;
-                       estado = 7;
-					} else if (c == ';' || c == ',' || c == '(' || c == ')' || c == '-' || c == '+' || c == '/' || c == '.' ) {
+                       estado = 6;
+					} else if (c == '&') {
 	                   lex.token += (char) c;
-	                   estado = 8;
-	                } else if (Character.isLetter(c)) {
+	                   estado = 7;
+	                } else if (Character.isDigit(c)) {
 	                   lex.token += (char) c;
-					   lex.type = TokenType.ID;
 	                   estado = 8;
 	                } else if (c == -1) {
 	                   lex.type = TokenType.END_OF_FILE;
@@ -90,7 +122,6 @@ public class LexicalAnalysis implements AutoCloseable {
 						estado = 0;
 					} else if (c !=  '\n' && c != '}'){
 						lex.token += (char) c;
-						line++;
 						estado = 1;
 					} else {
 						lex.type = TokenType.INVALID_TOKEN;
