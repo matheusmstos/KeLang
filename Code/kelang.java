@@ -1,14 +1,9 @@
-import lexical.Lexeme;
-import lexical.LexicalAnalysis;
-import lexical.TokenType;
-import lexical.LexicalException;
-
-import syntatic.SyntaticAnalysis;
-
-import interpreter.command.Command;
+import lexico.Lexeme;
+import lexico.LexicalAnalysis;
+import lexico.TokenType;
+import lexico.LexicalException;
 
 public class kelang {
-
     public static void main(String[] args) {
         if (args.length != 1) {
             System.out.println("Usage: java kelang [KeLang File]");
@@ -22,8 +17,6 @@ public class kelang {
             //Command c = s.start();
             // c.execute();
 
-
-
             // O código a seguir é usado apenas para testar o analisador léxico.
             // TODO: depois de pronto, comentar o código abaixo.
             Lexeme lex = l.nextToken();
@@ -31,7 +24,6 @@ public class kelang {
                 System.out.printf("(\"%s\", %s)\n", lex.token, lex.type);
                 lex = l.nextToken();
             }
-
             switch (lex.type) {
                 case INVALID_TOKEN:
                     System.out.printf("%02d: Lexema inválido [%s]\n", l.getLine(), lex.token);
@@ -43,7 +35,6 @@ public class kelang {
                     System.out.printf("(\"%s\", %s)\n", lex.token, lex.type);
                     break;
             }
-
         } catch (Exception e) {
             System.err.println("Internal error: " + e.getMessage());
         }
