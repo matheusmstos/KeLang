@@ -9,4 +9,12 @@ public class Lexeme {
         this.token = token;
         this.type = type;
     }
+
+    public String getToken() {
+        return token;
+    }
+
+    public TokenType getType() {
+        return type;
+    }
 }
