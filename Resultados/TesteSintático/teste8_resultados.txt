@@ -1,0 +1,17 @@
+execute called
+program called [app]
+Comi [APP]
+identifier called [_teste8]
+Comi [ID]
+body called [start]
+decllist called [start]
+decl called [start]
+decl out [start]
+decllist out [start]
+Comi [START]
+stmtlist called [stop]
+stmt called [stop]
+Not a valid statement, returning false
+stmt out [stop]
+stmtlist out [stop]
+Comi [STOP]
